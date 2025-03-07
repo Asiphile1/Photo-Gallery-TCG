@@ -3,9 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery</title>
+    <title>Responsive Photo Gallery</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+        
+        /* Header styles */
+        header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        header h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            font-style: italic;
+        }
+        
+        /* Main content styles */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* Gallery styles using Flexbox */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .gallery-item {
+            flex: 1 0 100%;
+            max-width: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* Responsive gallery items */
+        @media screen and (min-width: 576px) {
+            .gallery-item {
+                flex: 1 0 calc(50% - 1rem);
+                max-width: calc(50% - 1rem);
+            }
+        }
+        
+        @media screen and (min-width: 768px) {
+            .gallery-item {
+                flex: 1 0 calc(33.333% - 1rem);
+                max-width: calc(33.333% - 1rem);
+            }
+        }
+        
+        @media screen and (min-width: 992px) {
+            .gallery-item {
+                flex: 1 0 calc(25% - 1rem);
+                max-width: calc(25% - 1rem);
+            }
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Modal/Lightbox styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            position: relative;
+        }
+        
+        .modal-image {
+            max-width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        .modal-caption {
+            color: white;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0 1rem;
+            max-width: 80%;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+        }
+        
+        .modal-nav {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .modal-nav button {
+            background: rgba(255, 255, 255, 0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-nav button:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
 <body>
-    <hi>hi</hi>
+    <header>
+        <h1>Nature's Beauty</h1>
+        <p>A responsive photo gallery showcasing the wonders of nature</p>
+    </header>
+    
+    <main>
+        <div class="gallery">
+            <!-- Gallery items will be populated here -->
+            <div class="gallery-item" data-description="A peaceful forest with sunlight filtering through the trees.">
+                <img src="/api/placeholder/600/400" alt="Forest landscape">
+            </div>
+            <div class="gallery-item" data-description="A serene mountain lake reflecting the peaks above.">
+                <img src="/api/placeholder/600/400" alt="Mountain lake">
+            </div>
+            <div class="gallery-item" data-description="A beautiful sunset over the ocean horizon.">
+                <img src="/api/placeholder/600/400" alt="Ocean sunset">
+            </div>
+            <div class="gallery-item" data-description="A colorful field of wildflowers in full bloom.">
+                <img src="/api/placeholder/600/400" alt="Wildflower field">
+            </div>
+            <div class="gallery-item" data-description="A majestic waterfall cascading down rocky cliffs.">
+                <img src="/api/placeholder/600/400" alt="Waterfall">
+            </div>
+            <div class="gallery-item" data-description="An ancient tree with sprawling branches in a meadow.">
+                <img src="/api/placeholder/600/400" alt="Ancient tree">
+            </div>
+            <div class="gallery-item" data-description="A desert landscape with sand dunes at sunset.">
+                <img src="/api/placeholder/600/400" alt="Desert sunset">
+            </div>
+            <div class="gallery-item" data-description="A snow-capped mountain peak against a clear blue sky.">
+                <img src="/api/placeholder/600/400" alt="Mountain peak">
+            </div>
+            <div class="gallery-item" data-description="A tranquil beach with gentle waves and palm trees.">
+                <img src="/api/placeholder/600/400" alt="Tropical beach">
+            </div>
+            <div class="gallery-item" data-description="A lush green jungle canopy viewed from below.">
+                <img src="/api/placeholder/600/400" alt="Jungle canopy">
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal/Lightbox -->
+    <div class="modal" id="imageModal">
+        <button class="modal-close">&times;</button>
+        <div class="modal-content">
+            <img class="modal-image" src="" alt="Enlarged image">
+            <div class="modal-nav">
+                <button id="prevBtn">&lt;</button>
+                <button id="nextBtn">&gt;</button>
+            </div>
+        </div>
+        <div class="modal-caption"></div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Nature's Beauty Gallery | Created for Web Development Project</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.querySelector('.modal-image');
+            const modalCaption = document.querySelector('.modal-caption');
+            const closeBtn = document.querySelector('.modal-close');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            let currentIndex = 0;
+            
+            // Function to open modal with the correct image
+            function openModal(index) {
+                currentIndex = index;
+                const item = galleryItems[index];
+                const imgSrc = item.querySelector('img').src;
+                const imgAlt = item.querySelector('img').alt;
+                const imgDesc = item.dataset.description;
+                
+                modalImage.src = imgSrc;
+                modalImage.alt = imgAlt;
+                modalCaption.textContent = imgDesc;
+                
+                modal.style.display = 'flex';
+            }
+            
+            // Function to close modal
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+            
+            // Function to navigate to previous image
+            function showPrevImage() {
+                currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+                openModal(currentIndex);
+            }
+            
+            // Function to navigate to next image
+            function showNextImage() {
+                currentIndex = (currentIndex + 1) % galleryItems.length;
+                openModal(currentIndex);
+            }
+            
+            // Event listener for gallery items
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', () => openModal(index));
+            });
+            
+            // Event listeners for modal controls
+            closeBtn.addEventListener('click', closeModal);
+            prevBtn.addEventListener('click', showPrevImage);
+            nextBtn.addEventListener('click', showNextImage);
+            
+            // Close modal when clicking outside of content
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (modal.style.display === 'flex') {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                    } else if (e.key === 'ArrowLeft') {
+                        showPrevImage();
+                    } else if (e.key === 'ArrowRight') {
+                        showNextImage();
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
